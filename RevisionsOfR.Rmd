@@ -1,0 +1,99 @@
+---
+title: "RevisionsOfR"
+author: "Matheus Erthal"
+date: "07/03/2015"
+output: html_document
+---
+
+Revisions of R
+==============
+
+Here a try to keep records of nice functions and techniques learned in R.
+
+About the cars dataset:
+
+```{r, echo = FALSE}
+summary(cars)
+plot(cars)
+```
+
+Aggregate function creates a new dataset splitting the data into subsets and applying a funtion for each (e.g. mean).
+
+```{r, echo=TRUE}
+cars_2 <- aggregate(speed ~ dist, data = cars, FUN = mean)
+plot(dist ~ speed, data=cars_2)
+```
+
+##Formatting Data
+
+Working with dates.
+
+To get the current date:
+```{r, echo=TRUE}
+d2 <- Sys.Date()
+class(d2)
+```
+
+###Function *format*
+
+Formatting dates parameters:
+%d = day as number (0-31)
+%a = abbreviated weekday
+%A = unabbreviated weekday
+%m = month (00-12)
+%M = unabbreviated month
+%y = 2 digit year
+%Y = 4 digit year
+
+```{r, echo=TRUE}
+format(d2, "%a %b %d")
+```
+
+Creating dates:
+
+```{r}
+x <- c("1jan1960", "2jan1960", "30jul1960")
+z <- as.Date(x, "%d%b%Y")
+z
+```
+
+Time difference of -1 days:
+```{r}
+z[1] - z[2]
+as.numeric(z[1] - z[2])
+```
+
+Converting to Julian:
+```{r}
+weekdays(d2)
+```
+
+
+
+###Lubridate
+
+A simpler way to deal with data. The functions signatures stands for the formatation of the data passed as parameter, e.g. "mdy" stands for "month-day-year", "ymd_hms" stands for "year-month-day hour:minutes:seconds".
+
+```{r, echo=TRUE}
+library(lubridate)
+ymd("20140108")
+mdy("08/04/2013")
+dmy("03-04-2013")
+ymd_hms("2011-08-03 10:15:03", tz = "Pacific/Auckland")
+```
+
+Information about timezones: 
+  
+```{r, message=TRUE}
+?Sys.timezone
+```
+
+Some functions have a sintax slightly different. Such as:
+
+```{r, echo=TRUE}
+x <- dmy(c("1jan2013", "2jan2013", "30jul2013"))
+wday(x[1])
+wday(x[1], label = TRUE)
+```
+
+Ultimately I want date and time as class *Date* or *POSIXct*, *POSIXlt*.
