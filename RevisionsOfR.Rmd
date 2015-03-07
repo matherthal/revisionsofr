@@ -56,21 +56,28 @@ x <- c("1jan1960", "2jan1960", "30jul1960")
 z <- as.Date(x, "%d%b%Y")
 z
 ```
-
+  
 Time difference of -1 days:
 ```{r}
 z[1] - z[2]
 as.numeric(z[1] - z[2])
 ```
-
+  
 Converting to Julian:
 ```{r}
 weekdays(d2)
+months(d2)
+julian(d2)
+```
+
+A date can be converted to numeric and be converted again to date, if you use the origin:
+```{r, echo=TRUE}
+z <- as.numeric(z)
+z <- as.Date(z, origin)
 ```
 
 
-
-###Lubridate
+###Package Lubridate
 
 A simpler way to deal with data. The functions signatures stands for the formatation of the data passed as parameter, e.g. "mdy" stands for "month-day-year", "ymd_hms" stands for "year-month-day hour:minutes:seconds".
 
