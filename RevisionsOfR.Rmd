@@ -24,6 +24,18 @@ cars_2 <- aggregate(speed ~ dist, data = cars, FUN = mean)
 plot(dist ~ speed, data=cars_2)
 ```
 
+Number of levels from a column
+```{r}
+nlevels(as.factor(data$date)
+```
+
+Unique function
+```{r}
+unique(data$date)
+```
+
+
+
 ##Formatting Data
 
 Working with dates.
@@ -75,6 +87,18 @@ A date can be converted to numeric and be converted again to date, if you use th
 z <- as.numeric(z)
 z <- as.Date(z, origin)
 ```
+
+When having a column of the dataset with the dates and another with the intervals in seconds, an approach that can be adopted is:
+```{r}
+data$datetime <- as.POSIXct(data$date)
+data$datetime <- data$datetime - 3600*21 + data$interval*60
+```
+In the example above, when converted the date to POSIXct all the times were 21h, so we have subtracted it before adding the interval in min.
+
+The difference between POSIXct and POSIXlt is that the former stores seconds since UNIX epoch (+some other data) and the latter stores a list of day, month, year, hour, minute, second, etc.
+
+strptime is a function to directly convert character vectors (of a variety of formats) to POSIXlt format.
+
 
 
 ###Package Lubridate
